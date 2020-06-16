@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.guavy.gravestones.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "ExplosionMixin",
+    "PlayerEntityMixin",
+    "ServerPlayerInteractionManagerMixin"
+  ],
+  "client": [
+    "ClientPlayerInteractionManagerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

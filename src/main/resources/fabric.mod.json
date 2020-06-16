@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "gravestones",
+  "version": "${version}",
+
+  "name": "Gravestones",
+  "description": "A simple mod which spawns a gravestone on death containing your items!",
+  "authors": [
+    "Geometrically"
+  ],
+  "contact": {
+    "homepage": "https://guavy.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/guavy/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.guavy.gravestones.Gravestones"
+    ],
+    "modmenu": [ "net.guavy.gravestones.GravestonesModMenuImpl" ],
+    "client": [
+      {
+        "value": "net.guavy.gravestones.client.GravestonesClient"
+      }
+    ]
+  },
+  "mixins": [
+    "gravestones.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "*"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    "ABA",
+    "BBB"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:cobblestone"
+    },
+    "B": {
+      "item": "minecraft:dirt"
+    }
+  },
+  "result": {
+    "item": "gravestones:gravestone",
+    "count": 1
+  }
+}
+

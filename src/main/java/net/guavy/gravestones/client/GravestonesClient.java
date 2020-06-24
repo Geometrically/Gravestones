@@ -12,6 +12,9 @@ import net.guavy.gravestones.client.render.GravestoneBlockEntityRenderer;
 import net.guavy.gravestones.config.GravestonesConfig;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
 
@@ -30,7 +33,7 @@ public class GravestonesClient implements ClientModInitializer {
 
         guiRegistry.registerAnnotationProvider((s, field, config, defaults, guiRegistryAccess) -> {
             GravestonesConfig.UsePercentage bounds = field.getAnnotation(GravestonesConfig.UsePercentage.class);
-            return Collections.singletonList(ConfigEntryBuilder.create().startIntSlider(s, MathHelper.ceil(Utils.getUnsafely(field, config, 0.0) * 100), MathHelper.ceil(bounds.min() * 100), MathHelper.ceil(bounds.max() * 100)).setDefaultValue(() -> MathHelper.ceil((double) Utils.getUnsafely(field, defaults) * 100)).setSaveConsumer((newValue) -> Utils.setUnsafely(field, config, newValue / 100d)).setTextGetter(integer -> String.format("%d%%", integer)).build());
+            return Collections.singletonList(ConfigEntryBuilder.create().startIntSlider(new TranslatableText(s), MathHelper.ceil(Utils.getUnsafely(field, config, 0.0) * 100), MathHelper.ceil(bounds.min() * 100), MathHelper.ceil(bounds.max() * 100)).setDefaultValue(() -> MathHelper.ceil((double) Utils.getUnsafely(field, defaults) * 100)).setSaveConsumer((newValue) -> Utils.setUnsafely(field, config, newValue / 100d)).setTextGetter(integer -> new LiteralText(String.format("%d%%", integer))).build());
         }, field -> field.getType() == Double.TYPE || field.getType() == Double.class, GravestonesConfig.UsePercentage.class);
     }
 }

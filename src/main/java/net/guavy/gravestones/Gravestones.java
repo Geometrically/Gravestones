@@ -8,6 +8,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.guavy.gravestones.api.GravestonesApi;
 import net.guavy.gravestones.block.GravestoneBlock;
 import net.guavy.gravestones.block.entity.GravestoneBlockEntity;
+import net.guavy.gravestones.compat.TrinketsCompat;
 import net.guavy.gravestones.config.GravestonesConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -43,6 +44,9 @@ public class Gravestones implements ModInitializer {
 		Registry.register(Registry.ITEM, new Identifier("gravestones", "gravestone"), new BlockItem(GRAVESTONE, new Item.Settings().group(ItemGroup.DECORATIONS)));
 
 		AutoConfig.register(GravestonesConfig.class, GsonConfigSerializer::new);
+
+		if(FabricLoader.getInstance().isModLoaded("trinkets"))
+			apiMods.add(new TrinketsCompat());
 
 		apiMods.addAll(FabricLoader.getInstance().getEntrypoints("gravestones", GravestonesApi.class));
 	}

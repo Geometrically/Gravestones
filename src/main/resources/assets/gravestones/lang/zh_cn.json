@@ -1,0 +1,21 @@
+{
+  "block.gravestones.gravestone": "墓碑",
+  "text.autoconfig.gravestones.title": "墓碑配置",
+
+  "text.autoconfig.gravestones.option.mainSettings": "主设置",
+
+  "text.autoconfig.gravestones.option.mainSettings.enableGraves": "启用墓碑",
+  "text.autoconfig.gravestones.option.mainSettings.enableGraves.@Tooltip": "启用墓碑模组功能",
+
+  "text.autoconfig.gravestones.option.mainSettings.enableGraveLooting": "启用墓碑掠夺",
+  "text.autoconfig.gravestones.option.mainSettings.enableGraveLooting.@Tooltip": "其他玩家是否可以抢走一名玩家墓碑里的东西",
+
+  "text.autoconfig.gravestones.option.mainSettings.retrievalType": "墓碑取回类型",
+  "text.autoconfig.gravestones.option.mainSettings.retrievalType.@Tooltip": "玩家如何取回墓碑里的物品",
+
+  "text.autoconfig.gravestones.option.mainSettings.dropType": "墓碑掉落类型",
+  "text.autoconfig.gravestones.option.mainSettings.dropType.@Tooltip": "取回物品后墓碑会怎样",
+
+  "text.autoconfig.gravestones.option.mainSettings.xpPercentage": "保留的经验率",
+  "text.autoconfig.gravestones.option.mainSettings.xpPercentage.@Tooltip": "玩家死亡后保留多少百分比的经验"
+}

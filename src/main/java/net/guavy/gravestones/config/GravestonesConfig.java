@@ -27,6 +27,9 @@ public class GravestonesConfig implements ConfigData {
         public boolean enableGraveLooting = false;
 
         @ConfigEntry.Gui.Tooltip
+        public int minimumOpLevelToLoot = 4;
+
+        @ConfigEntry.Gui.Tooltip
         @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
         public GravestoneRetrievalType retrievalType = GravestoneRetrievalType.ON_STEP;
         @ConfigEntry.Gui.Tooltip

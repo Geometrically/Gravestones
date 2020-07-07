@@ -24,6 +24,8 @@ public class ServerPlayerInteractionManagerMixin {
     @Inject(method = "tryBreakBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;onBreak(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/entity/player/PlayerEntity;)V"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
     private void onBreakBlockBlock(BlockPos blockPos, CallbackInfoReturnable<Boolean> cir, BlockState blockState, BlockEntity blockEntity, Block block) {
         if(blockEntity instanceof GravestoneBlockEntity) {
+            if(this.player.hasPermissionLevel(GravestonesConfig.getConfig().mainSettings.minimumOpLevelToLoot)) return;
+
             GravestoneBlockEntity gravestoneBlockEntity = (GravestoneBlockEntity) blockEntity;
 
             if(GravestonesConfig.getConfig().mainSettings.retrievalType != GravestoneRetrievalType.ON_BREAK && gravestoneBlockEntity.getGraveOwner() != null)

@@ -34,4 +34,8 @@ public class TrinketsCompat implements GravestonesApi {
     public int getInventorySize(PlayerEntity entity) {
         return TrinketsApi.getTrinketsInventory(entity).size();
     }
+
+    public static void dropAll(PlayerEntity entity) {
+        TrinketsApi.TRINKETS.get(entity).getInventory().clear();
+    }
 }

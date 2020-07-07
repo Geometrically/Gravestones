@@ -1,12 +1,13 @@
 package net.guavy.gravestones.mixin;
 
+import net.fabricmc.loader.api.FabricLoader;
 import net.guavy.gravestones.Gravestones;
+import net.guavy.gravestones.compat.TrinketsCompat;
 import net.guavy.gravestones.config.GravestonesConfig;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,6 +31,9 @@ public abstract class PlayerEntityMixin extends LivingEntity{
             return;
         }
 
-        Gravestones.PlaceGrave(this.world, this.getPos(), this.inventory.player);
+        Gravestones.placeGrave(this.world, this.getPos(), this.inventory.player);
+
+        if(FabricLoader.getInstance().isModLoaded("trinkets"))
+            TrinketsCompat.dropAll((PlayerEntity) (Object) this);
     }
 }

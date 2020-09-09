@@ -4,11 +4,13 @@ import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
 import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.guavy.gravestones.api.GravestonesApi;
 import net.guavy.gravestones.block.GravestoneBlock;
 import net.guavy.gravestones.block.entity.GravestoneBlockEntity;
 import net.guavy.gravestones.compat.TrinketsCompat;
+import net.guavy.gravestones.config.GravestoneRetrievalType;
 import net.guavy.gravestones.config.GravestonesConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -53,12 +55,28 @@ public class Gravestones implements ModInitializer {
 			apiMods.add(new TrinketsCompat());
 
 		apiMods.addAll(FabricLoader.getInstance().getEntrypoints("gravestones", GravestonesApi.class));
+
+		PlayerBlockBreakEvents.BEFORE.register((world, player, pos, state, entity) -> {
+			if(entity instanceof GravestoneBlockEntity) {
+				GravestoneBlockEntity gravestoneBlockEntity = (GravestoneBlockEntity) entity;
+
+				if(player.hasPermissionLevel(GravestonesConfig.getConfig().mainSettings.minimumOpLevelToLoot) && !gravestoneBlockEntity.getGraveOwner().getId().equals(player.getGameProfile().getId())) return true;
+
+				if(GravestonesConfig.getConfig().mainSettings.retrievalType != GravestoneRetrievalType.ON_BREAK && gravestoneBlockEntity.getGraveOwner() != null)
+					return false;
+
+				if(gravestoneBlockEntity.getGraveOwner() != null && GravestonesConfig.getConfig().mainSettings.retrievalType == GravestoneRetrievalType.ON_BREAK)
+					if(!gravestoneBlockEntity.getGraveOwner().getId().equals(player.getGameProfile().getId()) && !GravestonesConfig.getConfig().mainSettings.enableGraveLooting)
+						return false;
+			}
+			return true;
+		});
 	}
 
 	public static void placeGrave(World world, Vec3d pos, PlayerEntity player) {
 		if (world.isClient) return;
 
-		BlockPos blockPos = new BlockPos(pos.x, pos.y, pos.z);
+		BlockPos blockPos = new BlockPos(pos.x, pos.y - 1, pos.z);
 
 		BlockState blockState = world.getBlockState(blockPos);
 		Block block = blockState.getBlock();
@@ -83,6 +101,10 @@ public class Gravestones implements ModInitializer {
 		player.experienceProgress = 0;
 		player.experienceLevel = 0;
 
+		if(blockPos.getY() < 0) {
+			blockPos = new BlockPos(blockPos.getX(), 10, blockPos.getZ());
+		}
+		
 		for (BlockPos gravePos : BlockPos.iterateOutwards(blockPos.add(new Vec3i(0, 1, 0)), 5, 5, 5)) {
 			if(canPlaceGravestone(world, block, gravePos)) {
 				world.setBlockState(gravePos, Gravestones.GRAVESTONE.getDefaultState().with(Properties.HORIZONTAL_FACING, player.getHorizontalFacing()));
@@ -90,6 +112,7 @@ public class Gravestones implements ModInitializer {
 
 				gravestoneBlockEntity.sync();
 				block.onBreak(world, blockPos, blockState, player);
+				System.out.println("[Gravestones] Gravestone spawned at: " + gravePos.getX() + ", " + gravePos.getY() + ", " + gravePos.getZ());
 				break;
 			}
 		}

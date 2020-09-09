@@ -31,7 +31,7 @@ public class GravestonesConfig implements ConfigData {
 
         @ConfigEntry.Gui.Tooltip
         @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
-        public GravestoneRetrievalType retrievalType = GravestoneRetrievalType.ON_STEP;
+        public GravestoneRetrievalType retrievalType = GravestoneRetrievalType.ON_BREAK;
         @ConfigEntry.Gui.Tooltip
         @ConfigEntry.Gui.EnumHandler(option = ConfigEntry.Gui.EnumHandler.EnumDisplayOption.BUTTON)
         public GravestoneDropType dropType = GravestoneDropType.PUT_IN_INVENTORY;

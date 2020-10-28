@@ -24,6 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.property.Properties;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -112,7 +113,12 @@ public class Gravestones implements ModInitializer {
 
 				gravestoneBlockEntity.sync();
 				block.onBreak(world, blockPos, blockState, player);
+
+				if (GravestonesConfig.getConfig().mainSettings.sendGraveCoordinates) {
+					player.sendMessage(new TranslatableText("text.gravestones.grave_coordinates", gravePos.getX(), gravePos.getY(), gravePos.getZ()), false);
+				}
 				System.out.println("[Gravestones] Gravestone spawned at: " + gravePos.getX() + ", " + gravePos.getY() + ", " + gravePos.getZ());
+
 				break;
 			}
 		}

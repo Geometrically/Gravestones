@@ -27,6 +27,9 @@ public class GravestonesConfig implements ConfigData {
         public boolean enableGraveLooting = false;
 
         @ConfigEntry.Gui.Tooltip
+        public boolean sendGraveCoordinates = false;
+
+        @ConfigEntry.Gui.Tooltip
         public int minimumOpLevelToLoot = 4;
 
         @ConfigEntry.Gui.Tooltip

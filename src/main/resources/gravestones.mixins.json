@@ -5,8 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "ExplosionMixin",
-    "PlayerEntityMixin",
-    "ServerPlayerInteractionManagerMixin"
+    "PlayerEntityMixin"
   ],
   "client": [
     "ClientPlayerInteractionManagerMixin"

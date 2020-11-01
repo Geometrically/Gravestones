@@ -1,0 +1,24 @@
+{
+  "block.gravestones.gravestone": "Надгробие",
+  "text.autoconfig.gravestones.title": "Настройки надгробий",
+
+  "text.autoconfig.gravestones.option.mainSettings": "Основные настройки",
+
+  "text.autoconfig.gravestones.option.mainSettings.enableGraves": "Включить надгробия",
+  "text.autoconfig.gravestones.option.mainSettings.enableGraves.@Tooltip": "Включает основной функционал модификации.",
+
+  "text.autoconfig.gravestones.option.mainSettings.enableGraveLooting": "Включить мародёрство",
+  "text.autoconfig.gravestones.option.mainSettings.enableGraveLooting.@Tooltip": "Могут ли другие игроки получить предметы из вашей могилы.",
+
+  "text.autoconfig.gravestones.option.mainSettings.minimumOpLevelToLoot": "Минимальный уровень оператора",
+  "text.autoconfig.gravestones.option.mainSettings.minimumOpLevelToLoot.@Tooltip": "Минимальный уровень оператора для сбора предметов.",
+
+  "text.autoconfig.gravestones.option.mainSettings.retrievalType": "Восстановление предметов",
+  "text.autoconfig.gravestones.option.mainSettings.retrievalType.@Tooltip": "Каким образом игрок получает предметы обратно.",
+
+  "text.autoconfig.gravestones.option.mainSettings.dropType": "Выпадение предметов",
+  "text.autoconfig.gravestones.option.mainSettings.dropType.@Tooltip": "Что происходит с предметами при разрушении надгробия.",
+
+  "text.autoconfig.gravestones.option.mainSettings.xpPercentage": "Сохраняемый процент опыта",
+  "text.autoconfig.gravestones.option.mainSettings.xpPercentage.@Tooltip": "Процент опыта, сохраняемый после вашей смерти."
+}

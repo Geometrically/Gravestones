@@ -10,6 +10,10 @@
   "text.autoconfig.gravestones.option.mainSettings.enableGraveLooting": "Включить мародёрство",
   "text.autoconfig.gravestones.option.mainSettings.enableGraveLooting.@Tooltip": "Могут ли другие игроки получить предметы из вашей могилы.",
 
+  "text.autoconfig.gravestones.option.mainSettings.sendGraveCoordinates": "Сообщать координаты надгробия",
+  "text.autoconfig.gravestones.option.mainSettings.sendGraveCoordinates.@Tooltip": "Сообщать ли игроку после смерти координаты его надгробия.",
+  "text.gravestones.grave_coordinates": "Надгробие появилось на координатах [x: %d, y: %d, z: %d]",
+
   "text.autoconfig.gravestones.option.mainSettings.minimumOpLevelToLoot": "Минимальный уровень оператора",
   "text.autoconfig.gravestones.option.mainSettings.minimumOpLevelToLoot.@Tooltip": "Минимальный уровень оператора для сбора предметов.",
 

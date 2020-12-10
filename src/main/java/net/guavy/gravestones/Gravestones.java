@@ -61,7 +61,7 @@ public class Gravestones implements ModInitializer {
 			if(entity instanceof GravestoneBlockEntity) {
 				GravestoneBlockEntity gravestoneBlockEntity = (GravestoneBlockEntity) entity;
 
-				if(player.hasPermissionLevel(GravestonesConfig.getConfig().mainSettings.minimumOpLevelToLoot) && !gravestoneBlockEntity.getGraveOwner().getId().equals(player.getGameProfile().getId())) return true;
+				if(player.hasPermissionLevel(GravestonesConfig.getConfig().mainSettings.minimumOpLevelToLoot) && gravestoneBlockEntity.getGraveOwner() != null && !gravestoneBlockEntity.getGraveOwner().getId().equals(player.getGameProfile().getId())) return true;
 
 				if(GravestonesConfig.getConfig().mainSettings.retrievalType != GravestoneRetrievalType.ON_BREAK && gravestoneBlockEntity.getGraveOwner() != null)
 					return false;
@@ -127,7 +127,6 @@ public class Gravestones implements ModInitializer {
 	private static boolean canPlaceGravestone(World world, Block block, BlockPos blockPos) {
 		BlockEntity blockEntity = world.getBlockEntity(blockPos);
 
-		System.out.println(blockEntity);
 		if(blockEntity != null) return false;
 
 		Set<Block> blackListedBlocks = new HashSet<Block>() {{

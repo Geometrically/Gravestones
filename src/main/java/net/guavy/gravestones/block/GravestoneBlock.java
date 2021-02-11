@@ -156,7 +156,8 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
             int inventoryOffset = 41;
 
             for (GravestonesApi gravestonesApi : Gravestones.apiMods) {
-                gravestonesApi.setInventory(items.subList(41, inventoryOffset + gravestonesApi.getInventorySize(playerEntity)), playerEntity);
+                gravestonesApi.setInventory(items.subList(inventoryOffset, inventoryOffset + gravestonesApi.getInventorySize(playerEntity)), playerEntity);
+                inventoryOffset += gravestonesApi.getInventorySize(playerEntity);
             }
 
             ItemScatterer.spawn(world, pos, dropItems);

@@ -23,11 +23,10 @@ public class TrinketsCompat implements GravestonesApi {
     }
 
     @Override
-    public List<ItemStack> setInventory(List<ItemStack> inventory, PlayerEntity entity) {
+    public void setInventory(List<ItemStack> inventory, PlayerEntity entity) {
         for(ItemStack itemStack : inventory) {
             TrinketsApi.getTrinketComponent(entity).equip(itemStack);
         }
-        return null;
     }
 
     @Override

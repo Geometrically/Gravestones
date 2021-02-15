@@ -108,6 +108,7 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
         retrievalInventory.addAll(playerEntity.inventory.armor);
         retrievalInventory.addAll(playerEntity.inventory.offHand);
 
+        playerEntity.inventory.clear();
 
         if(GravestonesConfig.getConfig().mainSettings.dropType == GravestoneDropType.PUT_IN_INVENTORY) {
             List<ItemStack> armor = items.subList(36, 40);
@@ -131,8 +132,9 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
             List<Integer> openArmorSlots = getInventoryOpenSlots(playerEntity.inventory.armor);
 
             for(int i = 0; i < 4; i++) {
-                if(openArmorSlots.contains(i))
-                    playerEntity.equipStack(EquipmentSlot.fromTypeIndex(EquipmentSlot.Type.ARMOR, 3 - i), retrievalInventory.subList(36, 40).get(i));
+                if(openArmorSlots.contains(i)) {
+                    playerEntity.equipStack(EquipmentSlot.fromTypeIndex(EquipmentSlot.Type.ARMOR, i), retrievalInventory.subList(36, 40).get(i));
+                }
                 else
                     extraItems.add(retrievalInventory.subList(36, 40).get(i));
             }

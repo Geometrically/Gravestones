@@ -29,6 +29,10 @@ public class GravestonesConfig implements ConfigData {
         @ConfigEntry.Gui.Tooltip
         public boolean sendGraveCoordinates = false;
 
+        // New config option. Set to false by default to maintain existing behaviour.
+        @ConfigEntry.Gui.Tooltip
+        public boolean enableDragonImmunity = false;
+
         @ConfigEntry.Gui.Tooltip
         public int minimumOpLevelToLoot = 4;
 

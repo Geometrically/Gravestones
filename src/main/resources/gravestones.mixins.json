@@ -5,7 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "ExplosionMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "EnderDragonEntityMixin",
+    "BlockTagsProviderMixin"
   ],
   "client": [
     "ClientPlayerInteractionManagerMixin"

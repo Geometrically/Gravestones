@@ -108,6 +108,10 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
         retrievalInventory.addAll(playerEntity.inventory.armor);
         retrievalInventory.addAll(playerEntity.inventory.offHand);
 
+        for (GravestonesApi gravestonesApi : Gravestones.apiMods) {
+            retrievalInventory.addAll(gravestonesApi.getInventory(playerEntity));
+        }
+
         playerEntity.inventory.clear();
 
         if(GravestonesConfig.getConfig().mainSettings.dropType == GravestoneDropType.PUT_IN_INVENTORY) {
@@ -145,6 +149,8 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
                 extraItems.add(retrievalInventory.get(40));
 
             extraItems.addAll(retrievalInventory.subList(0, 36));
+            if (retrievalInventory.size() > 41)
+                extraItems.addAll(retrievalInventory.subList(41, retrievalInventory.size()));
 
             List<Integer> openSlots = getInventoryOpenSlots(playerEntity.inventory.main);
 

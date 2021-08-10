@@ -32,10 +32,8 @@ public class ClientPlayerInteractionManagerMixin {
     private void breakBlock(BlockPos pos, CallbackInfoReturnable<Boolean> cir, World world, BlockState blockState, Block block) {
         BlockEntity blockEntity = world.getBlockEntity(pos);
 
-        if(blockEntity instanceof GravestoneBlockEntity) {
+        if(blockEntity instanceof GravestoneBlockEntity gravestoneBlockEntity) {
             if(this.client.player.hasPermissionLevel(GravestonesConfig.getConfig().mainSettings.minimumOpLevelToLoot)) return;
-
-            GravestoneBlockEntity gravestoneBlockEntity = (GravestoneBlockEntity) blockEntity;
 
             if(GravestonesConfig.getConfig().mainSettings.retrievalType != GravestoneRetrievalType.ON_BREAK && gravestoneBlockEntity.getGraveOwner() != null)
                 cir.setReturnValue(false);

@@ -1,28 +1,18 @@
 package net.guavy.gravestones.client;
 
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
-import me.sargunvohra.mcmods.autoconfig1u.gui.registry.GuiRegistry;
-import me.sargunvohra.mcmods.autoconfig1u.util.Utils;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.gui.registry.GuiRegistry;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
-import me.shedaniel.clothconfig2.impl.builders.DropdownMenuBuilder;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.guavy.gravestones.Gravestones;
 import net.guavy.gravestones.client.render.GravestoneBlockEntityRenderer;
 import net.guavy.gravestones.config.GravestonesConfig;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
 
-import java.lang.annotation.Annotation;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.stream.Collectors;
 
 public class GravestonesClient implements ClientModInitializer {
     @Override

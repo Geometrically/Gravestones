@@ -1,7 +1,7 @@
 package net.guavy.gravestones;
 
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
-import me.sargunvohra.mcmods.autoconfig1u.serializer.GsonConfigSerializer;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
@@ -58,9 +58,7 @@ public class Gravestones implements ModInitializer {
 		apiMods.addAll(FabricLoader.getInstance().getEntrypoints("gravestones", GravestonesApi.class));
 
 		PlayerBlockBreakEvents.BEFORE.register((world, player, pos, state, entity) -> {
-			if(entity instanceof GravestoneBlockEntity) {
-				GravestoneBlockEntity gravestoneBlockEntity = (GravestoneBlockEntity) entity;
-
+			if(entity instanceof GravestoneBlockEntity gravestoneBlockEntity) {
 				if(player.hasPermissionLevel(GravestonesConfig.getConfig().mainSettings.minimumOpLevelToLoot) && gravestoneBlockEntity.getGraveOwner() != null && !gravestoneBlockEntity.getGraveOwner().getId().equals(player.getGameProfile().getId())) return true;
 
 				if(GravestonesConfig.getConfig().mainSettings.retrievalType != GravestoneRetrievalType.ON_BREAK && gravestoneBlockEntity.getGraveOwner() != null)
@@ -86,9 +84,9 @@ public class Gravestones implements ModInitializer {
 
 		DefaultedList<ItemStack> combinedInventory = DefaultedList.of();
 
-		combinedInventory.addAll(player.inventory.main);
-		combinedInventory.addAll(player.inventory.armor);
-		combinedInventory.addAll(player.inventory.offHand);
+		combinedInventory.addAll(player.getInventory().main);
+		combinedInventory.addAll(player.getInventory().armor);
+		combinedInventory.addAll(player.getInventory().offHand);
 
 		for (GravestonesApi gravestonesApi : Gravestones.apiMods) {
 			combinedInventory.addAll(gravestonesApi.getInventory(player));

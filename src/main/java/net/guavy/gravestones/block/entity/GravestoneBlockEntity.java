@@ -3,12 +3,11 @@ package net.guavy.gravestones.block.entity;
 import com.mojang.authlib.GameProfile;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.guavy.gravestones.Gravestones;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
 import net.minecraft.util.collection.DefaultedList;
 
@@ -64,12 +63,12 @@ public class GravestoneBlockEntity extends BlockEntity implements BlockEntityCli
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) {
-        super.fromTag(state, tag);
+    public void readNbt(NbtCompound tag) {
+        super.readNbt(tag);
 
         this.items = DefaultedList.ofSize(tag.getInt("ItemCount"), ItemStack.EMPTY);
 
-        Inventories.fromTag(tag.getCompound("Items"), this.items);
+        Inventories.readNbt(tag.getCompound("Items"), this.items);
 
         this.xp = tag.getInt("XP");
 
@@ -81,17 +80,17 @@ public class GravestoneBlockEntity extends BlockEntity implements BlockEntityCli
     }
 
     @Override
-    public CompoundTag toTag(CompoundTag tag) {
-        super.toTag(tag);
+    public NbtCompound writeNbt(NbtCompound tag) {
+        super.writeNbt(tag);
 
         tag.putInt("ItemCount", this.items.size());
 
-        tag.put("Items", Inventories.toTag(new CompoundTag(), this.items, true));
+        tag.put("Items", Inventories.writeNbt(new NbtCompound(), this.items, true));
 
         tag.putInt("XP", xp);
 
         if(graveOwner != null)
-            tag.put("GraveOwner", NbtHelper.fromGameProfile(new CompoundTag(), graveOwner));
+            tag.put("GraveOwner", NbtHelper.writeGameProfile(new NbtCompound(), graveOwner));
         if(customName != null && !customName.isEmpty())
             tag.putString("CustomName", customName);
 
@@ -99,20 +98,20 @@ public class GravestoneBlockEntity extends BlockEntity implements BlockEntityCli
     }
 
     @Override
-    public void fromClientTag(CompoundTag compoundTag) {
-        if(compoundTag.contains("GraveOwner"))
-            this.graveOwner = NbtHelper.toGameProfile(compoundTag.getCompound("GraveOwner"));
-        if(compoundTag.contains("CustomName"))
-            this.customName = compoundTag.getString("CustomName");
+    public NbtCompound toClientTag(NbtCompound tag) {
+        if(graveOwner != null)
+            tag.put("GraveOwner", NbtHelper.writeGameProfile(new NbtCompound(), this.graveOwner));
+        if(customName != null && !customName.isEmpty())
+            tag.putString("CustomName", customName);
+
+        return tag;
     }
 
     @Override
-    public CompoundTag toClientTag(CompoundTag compoundTag) {
-        if(graveOwner != null)
-            compoundTag.put("GraveOwner", NbtHelper.fromGameProfile(new CompoundTag(), this.graveOwner));
-        if(customName != null && !customName.isEmpty())
-            compoundTag.putString("CustomName", customName);
-
-        return compoundTag;
+    public void fromClientTag(NbtCompound tag) {
+        if(tag.contains("GraveOwner"))
+            this.graveOwner = NbtHelper.toGameProfile(tag.getCompound("GraveOwner"));
+        if(tag.contains("CustomName"))
+            this.customName = tag.getString("CustomName");
     }
 }

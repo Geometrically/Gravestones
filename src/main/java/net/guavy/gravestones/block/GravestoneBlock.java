@@ -28,12 +28,12 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntityProvider {
-
     public GravestoneBlock(Settings settings) {
         super(settings);
         setDefaultState(this.stateManager.getDefaultState().with(Properties.HORIZONTAL_FACING, Direction.NORTH));
@@ -44,14 +44,13 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
         stateManager.add(Properties.HORIZONTAL_FACING);
     }
 
-    public void onSteppedOn(World world, BlockPos pos, Entity entity) {
-        if(GravestonesConfig.getConfig().mainSettings.retrievalType == GravestoneRetrievalType.ON_STEP && entity instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) entity;
-
+    @Override
+    public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
+        if(GravestonesConfig.getConfig().mainSettings.retrievalType == GravestoneRetrievalType.ON_STEP && entity instanceof PlayerEntity playerEntity) {
             RetrieveGrave(playerEntity, world, pos);
         }
 
-        super.onSteppedOn(world, pos, entity);
+        super.onSteppedOn(world, pos, state, entity);
     }
 
     @Override
@@ -76,8 +75,9 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
         return VoxelShapes.cuboid(0.1f, 0f, 0.1f, 0.9f, 0.3f, 0.9f);
     }
 
+    @Nullable
     @Override
-    public BlockEntity createBlockEntity(BlockView blockView) {
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new GravestoneBlockEntity();
     }
 
@@ -104,15 +104,15 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
 
         DefaultedList<ItemStack> retrievalInventory = DefaultedList.of();
 
-        retrievalInventory.addAll(playerEntity.inventory.main);
-        retrievalInventory.addAll(playerEntity.inventory.armor);
-        retrievalInventory.addAll(playerEntity.inventory.offHand);
+        retrievalInventory.addAll(playerEntity.getInventory().main);
+        retrievalInventory.addAll(playerEntity.getInventory().armor);
+        retrievalInventory.addAll(playerEntity.getInventory().offHand);
 
         for (GravestonesApi gravestonesApi : Gravestones.apiMods) {
             retrievalInventory.addAll(gravestonesApi.getInventory(playerEntity));
         }
 
-        playerEntity.inventory.clear();
+        playerEntity.getInventory().clear();
 
         if(GravestonesConfig.getConfig().mainSettings.dropType == GravestoneDropType.PUT_IN_INVENTORY) {
             List<ItemStack> armor = items.subList(36, 40);
@@ -143,7 +143,7 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
                     extraItems.add(retrievalInventory.subList(36, 40).get(i));
             }
 
-            if(playerEntity.inventory.offHand.get(0) == ItemStack.EMPTY)
+            if(playerEntity.getInventory().offHand.get(0) == ItemStack.EMPTY)
                 playerEntity.equipStack(EquipmentSlot.OFFHAND, retrievalInventory.get(40));
             else
                 extraItems.add(retrievalInventory.get(40));
@@ -152,7 +152,7 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
             if (retrievalInventory.size() > 41)
                 extraItems.addAll(retrievalInventory.subList(41, retrievalInventory.size()));
 
-            List<Integer> openSlots = getInventoryOpenSlots(playerEntity.inventory.main);
+            List<Integer> openSlots = getInventoryOpenSlots(playerEntity.getInventory().main);
 
             for(int i = 0; i < openSlots.size(); i++) {
                 playerEntity.equip(openSlots.get(i), extraItems.get(i));

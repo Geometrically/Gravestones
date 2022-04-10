@@ -1,24 +1,32 @@
 package net.guavy.gravestones.block.entity;
 
 import com.mojang.authlib.GameProfile;
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+//import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.guavy.gravestones.Gravestones;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.inventory.Inventories;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 
-public class GravestoneBlockEntity extends BlockEntity implements BlockEntityClientSerializable {
+import javax.annotation.Nullable;
+
+public class GravestoneBlockEntity extends BlockEntity {
+    // implements BlockEntityClientSerializable {
     private DefaultedList<ItemStack> items;
     private int xp;
     private GameProfile graveOwner;
     private String customName;
 
-    public GravestoneBlockEntity() {
-        super(Gravestones.GRAVESTONE_BLOCK_ENTITY);
+    public GravestoneBlockEntity(BlockPos pos, BlockState state) {
+        super(Gravestones.GRAVESTONE_BLOCK_ENTITY, pos, state);
 
         this.customName = "";
         this.graveOwner = null;
@@ -80,7 +88,7 @@ public class GravestoneBlockEntity extends BlockEntity implements BlockEntityCli
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound tag) {
+    public void writeNbt(NbtCompound tag) {
         super.writeNbt(tag);
 
         tag.putInt("ItemCount", this.items.size());
@@ -93,10 +101,19 @@ public class GravestoneBlockEntity extends BlockEntity implements BlockEntityCli
             tag.put("GraveOwner", NbtHelper.writeGameProfile(new NbtCompound(), graveOwner));
         if(customName != null && !customName.isEmpty())
             tag.putString("CustomName", customName);
-
-        return tag;
     }
 
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
+
+    @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
+    }
+    /*
     @Override
     public NbtCompound toClientTag(NbtCompound tag) {
         if(graveOwner != null)
@@ -114,4 +131,5 @@ public class GravestoneBlockEntity extends BlockEntity implements BlockEntityCli
         if(tag.contains("CustomName"))
             this.customName = tag.getString("CustomName");
     }
+     */
 }

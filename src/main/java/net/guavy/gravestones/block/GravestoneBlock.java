@@ -78,7 +78,7 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new GravestoneBlockEntity();
+        return new GravestoneBlockEntity(pos, state);
     }
 
     private boolean RetrieveGrave(PlayerEntity playerEntity, World world, BlockPos pos) {
@@ -89,7 +89,7 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
         if(!(be instanceof GravestoneBlockEntity)) return false;
         GravestoneBlockEntity blockEntity = (GravestoneBlockEntity) be;
 
-        blockEntity.sync();
+        blockEntity.markDirty();
 
         if(blockEntity.getItems() == null) return false;
         if(blockEntity.getGraveOwner() == null) return false;
@@ -128,12 +128,12 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
             List<ItemStack> mainInventory = items.subList(0, 36);
 
             for (int i = 0; i < mainInventory.size(); i++) {
-                playerEntity.equip(i, mainInventory.get(i));
+                playerEntity.getInventory().insertStack(i, mainInventory.get(i));
             }
 
             DefaultedList<ItemStack> extraItems = DefaultedList.of();
 
-            List<Integer> openArmorSlots = getInventoryOpenSlots(playerEntity.inventory.armor);
+            List<Integer> openArmorSlots = getInventoryOpenSlots(playerEntity.getInventory().armor);
 
             for(int i = 0; i < 4; i++) {
                 if(openArmorSlots.contains(i)) {
@@ -155,7 +155,7 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
             List<Integer> openSlots = getInventoryOpenSlots(playerEntity.getInventory().main);
 
             for(int i = 0; i < openSlots.size(); i++) {
-                playerEntity.equip(openSlots.get(i), extraItems.get(i));
+                playerEntity.getInventory().insertStack(openSlots.get(i), extraItems.get(i));
             }
 
             DefaultedList<ItemStack> dropItems = DefaultedList.of();
@@ -203,7 +203,7 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
 
         GravestoneBlockEntity gravestoneBlockEntity = (GravestoneBlockEntity) blockEntity;
 
-        gravestoneBlockEntity.setCustomName(itemStack.getOrCreateSubTag("display").getString("Name"));
+        gravestoneBlockEntity.setCustomName(itemStack.getOrCreateSubNbt("display").getString("Name"));
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {

@@ -79,6 +79,10 @@ public class Gravestones implements ModInitializer {
 
 		BlockPos blockPos = new BlockPos(pos.x, pos.y - 1, pos.z);
 
+		if(blockPos.getY() <= world.getDimension().minY()) {
+			blockPos = new BlockPos(blockPos.getX(), world.getDimension().minY(), blockPos.getZ());
+		}
+
 		BlockState blockState = world.getBlockState(blockPos);
 		Block block = blockState.getBlock();
 
@@ -97,14 +101,13 @@ public class Gravestones implements ModInitializer {
 		player.experienceProgress = 0;
 		player.experienceLevel = 0;
 
-		if(blockPos.getY() < 0) {
-			blockPos = new BlockPos(blockPos.getX(), 10, blockPos.getZ());
-		}
-		
+		boolean placed = false;
+
 		for (BlockPos gravePos : BlockPos.iterateOutwards(blockPos.add(new Vec3i(0, 1, 0)), 5, 5, 5)) {
 			if(canPlaceGravestone(world, block, gravePos)) {
 				BlockState graveState = Gravestones.GRAVESTONE.getDefaultState().with(Properties.HORIZONTAL_FACING, player.getHorizontalFacing());
-				world.setBlockState(gravePos, graveState);
+
+				placed = world.setBlockState(gravePos, graveState);
 				GravestoneBlockEntity gravestoneBlockEntity = new GravestoneBlockEntity(gravePos, graveState);
 				gravestoneBlockEntity.setItems(combinedInventory);
 				gravestoneBlockEntity.setGraveOwner(player.getGameProfile());
@@ -122,6 +125,10 @@ public class Gravestones implements ModInitializer {
 				break;
 			}
 		}
+
+		if (!placed) {
+			player.getInventory().dropAll();
+		}
 	}
 
 	private static boolean canPlaceGravestone(World world, Block block, BlockPos blockPos) {
@@ -129,13 +136,15 @@ public class Gravestones implements ModInitializer {
 
 		if(blockEntity != null) return false;
 
+		/*
 		Set<Block> blackListedBlocks = new HashSet<Block>() {{
 			add(Blocks.BEDROCK);
 		}};
 
 		if(blackListedBlocks.contains(block)) return false;
+		*/
 
-		return !(blockPos.getY() < 0 || blockPos.getY() > 255);
+		return !(blockPos.getY() < world.getDimension().minY() || blockPos.getY() > world.getDimension().height() - world.getDimension().minY());
 	}
 }
 

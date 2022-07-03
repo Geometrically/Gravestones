@@ -96,11 +96,12 @@ public class Gravestones implements ModInitializer {
 		player.totalExperience = 0;
 		player.experienceProgress = 0;
 		player.experienceLevel = 0;
-
-		if(blockPos.getY() < 0) {
+		if(blockPos.getY() + 1 < world.getDimension().minY()) {
 			blockPos = new BlockPos(blockPos.getX(), 10, blockPos.getZ());
 		}
-		
+
+		boolean placed = false;
+
 		for (BlockPos gravePos : BlockPos.iterateOutwards(blockPos.add(new Vec3i(0, 1, 0)), 5, 5, 5)) {
 			if(canPlaceGravestone(world, block, gravePos)) {
 				BlockState graveState = Gravestones.GRAVESTONE.getDefaultState().with(Properties.HORIZONTAL_FACING, player.getHorizontalFacing());
@@ -117,10 +118,15 @@ public class Gravestones implements ModInitializer {
 				if (GravestonesConfig.getConfig().mainSettings.sendGraveCoordinates) {
 					player.sendMessage(Text.translatable("text.gravestones.grave_coordinates", gravePos.getX(), gravePos.getY(), gravePos.getZ()), false);
 				}
+				placed = true;
 				System.out.println("[Gravestones] Gravestone spawned at: " + gravePos.getX() + ", " + gravePos.getY() + ", " + gravePos.getZ());
 
 				break;
 			}
+		}
+
+		if (!placed) {
+			player.getInventory().dropAll();
 		}
 	}
 
@@ -135,7 +141,7 @@ public class Gravestones implements ModInitializer {
 
 		if(blackListedBlocks.contains(block)) return false;
 
-		return !(blockPos.getY() < 0 || blockPos.getY() > 255);
+		return !(blockPos.getY() + 1 < world.getDimension().minY() || blockPos.getY() > world.getDimension().height() - world.getDimension().minY());
 	}
 }
 

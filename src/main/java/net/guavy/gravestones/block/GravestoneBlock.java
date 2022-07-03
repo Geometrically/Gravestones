@@ -71,6 +71,7 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext ct) {
         return VoxelShapes.cuboid(0.1f, 0f, 0.1f, 0.9f, 0.3f, 0.9f);
     }
@@ -117,10 +118,10 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
         if(GravestonesConfig.getConfig().mainSettings.dropType == GravestoneDropType.PUT_IN_INVENTORY) {
             List<ItemStack> armor = items.subList(36, 40);
 
-            for (int i = 0; i < armor.size(); i++) {
-                EquipmentSlot equipmentSlot = MobEntity.getPreferredEquipmentSlot(armor.get(i));
+            for (ItemStack itemStack : armor) {
+                EquipmentSlot equipmentSlot = MobEntity.getPreferredEquipmentSlot(itemStack);
 
-                playerEntity.equipStack(equipmentSlot, armor.get(i));
+                playerEntity.equipStack(equipmentSlot, itemStack);
             }
 
             playerEntity.equipStack(EquipmentSlot.OFFHAND, items.get(40));

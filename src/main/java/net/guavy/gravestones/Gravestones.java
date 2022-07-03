@@ -106,7 +106,8 @@ public class Gravestones implements ModInitializer {
 		for (BlockPos gravePos : BlockPos.iterateOutwards(blockPos.add(new Vec3i(0, 1, 0)), 5, 5, 5)) {
 			if(canPlaceGravestone(world, block, gravePos)) {
 				BlockState graveState = Gravestones.GRAVESTONE.getDefaultState().with(Properties.HORIZONTAL_FACING, player.getHorizontalFacing());
-				world.setBlockState(gravePos, graveState);
+
+				placed = world.setBlockState(gravePos, graveState);
 				GravestoneBlockEntity gravestoneBlockEntity = new GravestoneBlockEntity(gravePos, graveState);
 				gravestoneBlockEntity.setItems(combinedInventory);
 				gravestoneBlockEntity.setGraveOwner(player.getGameProfile());
@@ -119,7 +120,6 @@ public class Gravestones implements ModInitializer {
 				if (GravestonesConfig.getConfig().mainSettings.sendGraveCoordinates) {
 					player.sendMessage(Text.translatable("text.gravestones.grave_coordinates", gravePos.getX(), gravePos.getY(), gravePos.getZ()), false);
 				}
-				placed = true;
 				System.out.println("[Gravestones] Gravestone spawned at: " + gravePos.getX() + ", " + gravePos.getY() + ", " + gravePos.getZ());
 
 				break;

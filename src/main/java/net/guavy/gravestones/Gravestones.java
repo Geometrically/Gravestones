@@ -79,8 +79,8 @@ public class Gravestones implements ModInitializer {
 
 		BlockPos blockPos = new BlockPos(pos.x, pos.y - 1, pos.z);
 
-		if(blockPos.getY() < world.getDimension().minY()) {
-			blockPos = new BlockPos(blockPos.getX(), world.getDimension().minY() + 1, blockPos.getZ());
+		if(blockPos.getY() <= world.getDimension().minY()) {
+			blockPos = new BlockPos(blockPos.getX(), world.getDimension().minY(), blockPos.getZ());
 		}
 
 		BlockState blockState = world.getBlockState(blockPos);
@@ -136,11 +136,13 @@ public class Gravestones implements ModInitializer {
 
 		if(blockEntity != null) return false;
 
+		/*
 		Set<Block> blackListedBlocks = new HashSet<Block>() {{
 			add(Blocks.BEDROCK);
 		}};
 
 		if(blackListedBlocks.contains(block)) return false;
+		*/
 
 		return !(blockPos.getY() < world.getDimension().minY() || blockPos.getY() > world.getDimension().height() - world.getDimension().minY());
 	}

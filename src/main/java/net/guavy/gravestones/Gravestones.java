@@ -79,6 +79,10 @@ public class Gravestones implements ModInitializer {
 
 		BlockPos blockPos = new BlockPos(pos.x, pos.y - 1, pos.z);
 
+		if(blockPos.getY() < world.getDimension().minY()) {
+			blockPos = new BlockPos(blockPos.getX(), world.getDimension().minY() + 1, blockPos.getZ());
+		}
+
 		BlockState blockState = world.getBlockState(blockPos);
 		Block block = blockState.getBlock();
 
@@ -96,9 +100,6 @@ public class Gravestones implements ModInitializer {
 		player.totalExperience = 0;
 		player.experienceProgress = 0;
 		player.experienceLevel = 0;
-		if(blockPos.getY() + 1 < world.getDimension().minY()) {
-			blockPos = new BlockPos(blockPos.getX(), 10, blockPos.getZ());
-		}
 
 		boolean placed = false;
 
@@ -141,7 +142,7 @@ public class Gravestones implements ModInitializer {
 
 		if(blackListedBlocks.contains(block)) return false;
 
-		return !(blockPos.getY() + 1 < world.getDimension().minY() || blockPos.getY() > world.getDimension().height() - world.getDimension().minY());
+		return !(blockPos.getY() < world.getDimension().minY() || blockPos.getY() > world.getDimension().height() - world.getDimension().minY());
 	}
 }
 

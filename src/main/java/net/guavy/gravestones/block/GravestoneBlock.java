@@ -67,6 +67,7 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
             if(RetrieveGrave(player, world, pos))
                 return;
 
+        dropAllGrave(world, pos);
         super.onBreak(world, pos, state, player);
     }
 
@@ -82,7 +83,24 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
         return new GravestoneBlockEntity(pos, state);
     }
 
-    private boolean RetrieveGrave(PlayerEntity playerEntity, World world, BlockPos pos) {
+    public void dropAllGrave(World world, BlockPos pos) {
+        if(world.isClient) return;
+
+        BlockEntity be = world.getBlockEntity(pos);
+
+        if(!(be instanceof GravestoneBlockEntity)) return;
+        GravestoneBlockEntity blockEntity = (GravestoneBlockEntity) be;
+
+        blockEntity.markDirty();
+
+        if(blockEntity.getItems() == null) return;
+
+        ItemScatterer.spawn(world, pos, blockEntity.getItems());
+
+        blockEntity.setItems(DefaultedList.copyOf(ItemStack.EMPTY));
+    }
+
+    public boolean RetrieveGrave(PlayerEntity playerEntity, World world, BlockPos pos) {
         if(world.isClient) return false;
 
         BlockEntity be = world.getBlockEntity(pos);

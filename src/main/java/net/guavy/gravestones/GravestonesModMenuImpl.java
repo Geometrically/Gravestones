@@ -8,7 +8,7 @@ import net.fabricmc.api.Environment;
 import net.guavy.gravestones.config.GravestonesConfig;
 
 @Environment(EnvType.CLIENT)
-class GravestonesModMenuImpl implements ModMenuApi {
+public class GravestonesModMenuImpl implements ModMenuApi {
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {

@@ -1,22 +1,32 @@
 package net.guavy.gravestones.client.render;
 
 import net.guavy.gravestones.block.entity.GravestoneBlockEntity;
+import net.minecraft.block.AbstractSkullBlock;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SkullBlock;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.block.entity.SkullBlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3f;
 
-public class GravestoneBlockEntityRenderer extends BlockEntityRenderer<GravestoneBlockEntity> {
+public class GravestoneBlockEntityRenderer implements BlockEntityRenderer<GravestoneBlockEntity> {
 
     public GravestoneBlockEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+        this.dispatcher = dispatcher;
     }
+
+    public BlockEntityRenderDispatcher dispatcher;
+
+    public GravestoneBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
+         this.dispatcher = ctx.getRenderDispatcher();
+    }
+
 
     @Override
     public void render(GravestoneBlockEntity blockEntity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
@@ -30,26 +40,26 @@ public class GravestoneBlockEntityRenderer extends BlockEntityRenderer<Graveston
 
         switch (direction) {
             case NORTH:
-                matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180));
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
                 matrices.translate(-1.2, 0.6, -0.9);
                 break;
             case SOUTH:
                 matrices.translate(0.15, 0.6, 0.4);
                 break;
             case EAST:
-                matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90));
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
                 matrices.translate(-1.2, 0.6, 0.4);
                 break;
             case WEST:
-                matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270));
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270));
                 matrices.translate(0.15, 0.6, -0.9);
                 break;
         }
 
-        matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
+        matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
 
         if(blockEntity.getGraveOwner() != null) {
-            SkullBlockEntityRenderer.render(null, 0f, SkullBlock.Type.PLAYER, blockEntity.getGraveOwner(), 0f, matrices, vertexConsumers, light);
+            SkullBlockEntityRenderer.renderSkull(null, 0f, 0f, matrices, vertexConsumers, light, SkullBlockEntityRenderer.getModels(MinecraftClient.getInstance().getEntityModelLoader()).get(SkullBlock.Type.PLAYER), SkullBlockEntityRenderer.getRenderLayer(SkullBlock.Type.PLAYER, blockEntity.getGraveOwner()));
         }
 
 
@@ -70,23 +80,23 @@ public class GravestoneBlockEntityRenderer extends BlockEntityRenderer<Graveston
         //Main Text
         matrices.push();
 
-        int width = this.dispatcher.getTextRenderer().getWidth(text);
+        int width = MinecraftClient.getInstance().textRenderer.getWidth(text);
 
         float scale = 0.7F / width;
 
         switch (direction) {
             case NORTH:
-                matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180));
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
                 matrices.translate(-1, 0, -1);
                 break;
             case SOUTH:
                 break;
             case EAST:
-                matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90));
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
                 matrices.translate(-1, 0, 0);
                 break;
             case WEST:
-                matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270));
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270));
                 matrices.translate(0, 0, -1);
                 break;
         }
@@ -98,7 +108,7 @@ public class GravestoneBlockEntityRenderer extends BlockEntityRenderer<Graveston
         matrices.scale(scale, scale, scale);
         matrices.translate(-width / 2.0, -4.5, 0);
 
-        this.dispatcher.getTextRenderer().draw(text, 0, 0, 0xFFFFFF, true, matrices.peek().getModel(), vertexConsumers, false, 0, light);
+        MinecraftClient.getInstance().textRenderer.draw(text, 0, 0, 0xFFFFFF, true, matrices.peek().getPositionMatrix(), vertexConsumers, false, 0, light);
         matrices.pop();
     }
 }

@@ -1,8 +1,6 @@
 package net.guavy.gravestones.client.render;
 
 import net.guavy.gravestones.block.entity.GravestoneBlockEntity;
-import net.minecraft.block.AbstractSkullBlock;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.SkullBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -13,7 +11,7 @@ import net.minecraft.client.render.block.entity.SkullBlockEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 
 public class GravestoneBlockEntityRenderer implements BlockEntityRenderer<GravestoneBlockEntity> {
 
@@ -40,23 +38,23 @@ public class GravestoneBlockEntityRenderer implements BlockEntityRenderer<Graves
 
         switch (direction) {
             case NORTH:
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
                 matrices.translate(-1.2, 0.6, -0.9);
                 break;
             case SOUTH:
                 matrices.translate(0.15, 0.6, 0.4);
                 break;
             case EAST:
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
                 matrices.translate(-1.2, 0.6, 0.4);
                 break;
             case WEST:
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(270));
                 matrices.translate(0.15, 0.6, -0.9);
                 break;
         }
 
-        matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90));
 
         if(blockEntity.getGraveOwner() != null) {
             SkullBlockEntityRenderer.renderSkull(null, 0f, 0f, matrices, vertexConsumers, light, SkullBlockEntityRenderer.getModels(MinecraftClient.getInstance().getEntityModelLoader()).get(SkullBlock.Type.PLAYER), SkullBlockEntityRenderer.getRenderLayer(SkullBlock.Type.PLAYER, blockEntity.getGraveOwner()));
@@ -86,17 +84,17 @@ public class GravestoneBlockEntityRenderer implements BlockEntityRenderer<Graves
 
         switch (direction) {
             case NORTH:
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180));
                 matrices.translate(-1, 0, -1);
                 break;
             case SOUTH:
                 break;
             case EAST:
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
                 matrices.translate(-1, 0, 0);
                 break;
             case WEST:
-                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270));
+                matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(270));
                 matrices.translate(0, 0, -1);
                 break;
         }

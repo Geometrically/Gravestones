@@ -23,6 +23,9 @@ repositories {
 		url = 'https://ladysnake.jfrog.io/artifactory/mods'
 	}
 	maven { url "https://maven.shedaniel.me/" }
+
+	// temporary
+	maven { url "https://maven.pkom.ml/" }
 }
 
 dependencies {

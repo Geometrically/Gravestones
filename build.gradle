@@ -80,13 +80,14 @@ jar {
 
 import com.modrinth.minotaur.TaskModrinthUpload
 
-task publishModrinth (type: TaskModrinthUpload){
+task publishModrinth (type: TaskModrinthUpload) {
 
 	token = 'lol' // Use an environment property!
 	projectId = 'ssUbhMkL'
 	versionType = com.modrinth.minotaur.request.VersionType.RELEASE
 	uploadFile = remapJar // This is the java jar task
-	addGameVersion('1.18.2')
+	addGameVersion('1.20')
+	addGameVersion('1.20.1')
 	addLoader('fabric')
 }
 

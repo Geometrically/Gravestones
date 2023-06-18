@@ -94,10 +94,6 @@ public class Gravestones implements ModInitializer {
 			combinedInventory.addAll(gravestonesApi.getInventory(player));
 		}
 
-		player.totalExperience = 0;
-		player.experienceProgress = 0;
-		player.experienceLevel = 0;
-
 		boolean placed = false;
 
 		for (BlockPos gravePos : BlockPos.iterateOutwards(blockPos.add(new Vec3i(0, 1, 0)), 5, 5, 5)) {
@@ -122,6 +118,11 @@ public class Gravestones implements ModInitializer {
 				break;
 			}
 		}
+
+		// fixed by Wanesty
+		player.totalExperience = 0;
+		player.experienceProgress = 0;
+		player.experienceLevel = 0;
 
 		if (!placed) {
 			player.getInventory().dropAll();

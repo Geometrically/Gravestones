@@ -31,7 +31,7 @@ public abstract class PlayerEntityMixin extends LivingEntity{
             return;
         }
 
-        Gravestones.placeGrave(this.world, this.getPos(), this.inventory.player);
+        Gravestones.placeGrave(this.getWorld(), this.getPos(), this.inventory.player);
 
         if(FabricLoader.getInstance().isModLoaded("trinkets"))
             TrinketsCompat.dropAll((PlayerEntity) (Object) this);

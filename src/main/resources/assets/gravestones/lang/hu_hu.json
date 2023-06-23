@@ -1,0 +1,28 @@
+{
+  "block.gravestones.gravestone": "S\u00EDrk\u0151",
+  "text.autoconfig.gravestones.title": "S\u00EDrk\u00F6vek be\u00E1ll\u00EDt\u00E1sai",
+
+  "text.autoconfig.gravestones.option.mainSettings": "Alapbe\u00E1ll\u00EDt\u00E1sok",
+
+  "text.autoconfig.gravestones.option.mainSettings.enableGraves": "S\u00EDrk\u00F6vek enged\u00E9lyez\u00E9se",
+  "text.autoconfig.gravestones.option.mainSettings.enableGraves.@Tooltip": "A s\u00EDrk\u0151vek mod funkcionalit\u00E1s\u00E1nak enged\u00E9lyez\u00E9se",
+
+  "text.autoconfig.gravestones.option.mainSettings.enableGraveLooting": "S\u00EDrk\u0151 kifoszt\u00E1s\u00E1nak enged\u00E9lyez\u00E9se",
+  "text.autoconfig.gravestones.option.mainSettings.enableGraveLooting.@Tooltip": "Meghat\u00E1rozza, hogy m\u00E1s j\u00E1t\u00E9kos s\u00EDrk\u00F6v\u00E9hez hozz\u00E1f\u00E9rhetnek-e.",
+
+  "text.autoconfig.gravestones.option.mainSettings.sendGraveCoordinates": "S\u00EDrk\u0151 koordin\u00E1t\u00E1inak elk\u00FCld\u00E9se",
+  "text.autoconfig.gravestones.option.mainSettings.sendGraveCoordinates.@Tooltip": "Meghat\u00E1rozza, hogy a s\u00EDrk\u00F6vek koordin\u00E1t\u00E1it elk\u00FCldje-e a j\u00E1t\u00E9kosnak a hal\u00E1la ut\u00E1n.",
+  "text.gravestones.grave_coordinates": "A s\u00EDrk\u00F6ved az [x: %d, y: %d, z: %d] koordin\u00E1t\u00E1n elk\u00E9sz\u00FClt",
+
+  "text.autoconfig.gravestones.option.mainSettings.minimumOpLevelToLoot": "Kifoszt\u00E1shoz sz\u00FCks\u00E9ges minim\u00E1lis XP szint",
+  "text.autoconfig.gravestones.option.mainSettings.minimumOpLevelToLoot.@Tooltip": "Az a minimum tapaszalati szint, amellyel megker\u00FClhet\u0151 a sirk\u0151-v\u00E9delmi rendszer a vil\u00E1gban",
+
+  "text.autoconfig.gravestones.option.mainSettings.retrievalType": "S\u00EDrk\u0151 tartalm\u00E1nak visszaszerz\u00E9si t\u00EDpusa",
+  "text.autoconfig.gravestones.option.mainSettings.retrievalType.@Tooltip": "Meghat\u00E1rozza, hogy hogyan kapod vissza a s\u00EDrk\u0151b\u0151l a dolgaidat.",
+
+  "text.autoconfig.gravestones.option.mainSettings.dropType": "Sirk\u0151ben l\u00E9v\u0151 t\u00E1rgyak eldob\u00E1s\u00E1nak t\u00EDpusa",
+  "text.autoconfig.gravestones.option.mainSettings.dropType.@Tooltip": "Mi t\u00F6rt\u00E9nik a t\u00E1rgyakkal, amikor a s\u00EDrk\u00F6vet megsemmis\u00EDtik?",
+
+  "text.autoconfig.gravestones.option.mainSettings.xpPercentage": "Megmarad\u00F3 XP mennyis\u00E9ge [%]",
+  "text.autoconfig.gravestones.option.mainSettings.xpPercentage.@Tooltip": "Az a tapasztalat mennyis\u00E9g, amely a j\u00E1t\u00E9kos hal\u00E1la ut\u00E1n megmarad (sz\u00E1zal\u00E9kban)."
+}

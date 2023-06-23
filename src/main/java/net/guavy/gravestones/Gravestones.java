@@ -16,7 +16,7 @@ import net.guavy.gravestones.config.GravestoneRetrievalType;
 import net.guavy.gravestones.config.GravestonesConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,7 +36,7 @@ import java.util.ArrayList;
 
 public class Gravestones implements ModInitializer {
 
-	public static final GravestoneBlock GRAVESTONE = new GravestoneBlock(FabricBlockSettings.of(Material.ORGANIC_PRODUCT).strength(0.8f, -1f));
+	public static final GravestoneBlock GRAVESTONE = new GravestoneBlock(FabricBlockSettings.copyOf(Blocks.COARSE_DIRT).strength(0.8f, -1f));
 	public static BlockEntityType<GravestoneBlockEntity> GRAVESTONE_BLOCK_ENTITY;
 
 	public static final ArrayList<GravestonesApi> apiMods = new ArrayList<>();
@@ -74,7 +74,7 @@ public class Gravestones implements ModInitializer {
 	public static void placeGrave(World world, Vec3d pos, PlayerEntity player) {
 		if (world.isClient) return;
 
-		BlockPos blockPos = new BlockPos(pos.x, pos.y - 1, pos.z);
+		BlockPos blockPos = BlockPos.ofFloored(pos.x, pos.y - 1, pos.z);
 
 		if(blockPos.getY() <= world.getDimension().minY()) {
 			blockPos = new BlockPos(blockPos.getX(), world.getDimension().minY(), blockPos.getZ());
@@ -93,10 +93,6 @@ public class Gravestones implements ModInitializer {
 		for (GravestonesApi gravestonesApi : Gravestones.apiMods) {
 			combinedInventory.addAll(gravestonesApi.getInventory(player));
 		}
-
-		player.totalExperience = 0;
-		player.experienceProgress = 0;
-		player.experienceLevel = 0;
 
 		boolean placed = false;
 
@@ -123,6 +119,11 @@ public class Gravestones implements ModInitializer {
 			}
 		}
 
+		// fixed by Wanesty
+		player.totalExperience = 0;
+		player.experienceProgress = 0;
+		player.experienceLevel = 0;
+
 		if (!placed) {
 			player.getInventory().dropAll();
 		}
@@ -133,7 +134,7 @@ public class Gravestones implements ModInitializer {
 
 		if(blockEntity != null) return false;
 
-		/*
+        /*
 		Set<Block> blackListedBlocks = new HashSet<Block>() {{
 			add(Blocks.BEDROCK);
 		}};

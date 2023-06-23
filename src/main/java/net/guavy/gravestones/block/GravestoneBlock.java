@@ -226,6 +226,6 @@ public class GravestoneBlock extends HorizontalFacingBlock implements BlockEntit
     }
 
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(FACING, ctx.getPlayerFacing());
+        return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing());
     }
 }

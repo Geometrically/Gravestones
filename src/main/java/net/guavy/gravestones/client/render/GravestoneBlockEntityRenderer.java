@@ -3,6 +3,7 @@ package net.guavy.gravestones.client.render;
 import net.guavy.gravestones.block.entity.GravestoneBlockEntity;
 import net.minecraft.block.SkullBlock;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -106,7 +107,7 @@ public class GravestoneBlockEntityRenderer implements BlockEntityRenderer<Graves
         matrices.scale(scale, scale, scale);
         matrices.translate(-width / 2.0, -4.5, 0);
 
-        MinecraftClient.getInstance().textRenderer.draw(text, 0, 0, 0xFFFFFF, true, matrices.peek().getPositionMatrix(), vertexConsumers, false, 0, light);
+        MinecraftClient.getInstance().textRenderer.draw(text, 0, 0, 0xFFFFFF, false, matrices.peek().getPositionMatrix(), vertexConsumers, TextRenderer.TextLayerType.NORMAL, 0, light);
         matrices.pop();
     }
 }
